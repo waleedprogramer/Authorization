@@ -8,17 +8,37 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [messageColor, setMessageColor] = useState('text-red-500');
+  const [error, setError] = useState<string | null>(null); // Track error message
   const router = useRouter();
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (username === 'user' && password === 'pass123') {
-      setMessage('Login successful!');
+
+    // Reset previous error message
+    setError(null);
+
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      setMessage(data.message);
       setMessageColor('text-green-500');
-      router.push('/dashboard');
+      router.push('/dashboard'); 
     } else {
-      setMessage('Invalid credentials');
+      setMessage(data.message);
       setMessageColor('text-red-500');
+    }
+
+    // Handle fetch error
+    if (!response.ok) {
+      setError('An error occurred. Please try again later.');
     }
   };
 
@@ -26,7 +46,7 @@ const LoginPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-blue-600">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">Welcome back Fellas</h1>
-        <p className='text-center mb-8 text-xl text-gray-600'>Enter user & password to continue</p>
+        <p className="text-center mb-8 text-xl text-gray-600">Enter user & password to continue</p>
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
             <label htmlFor="username" className="block text-gray-700 font-medium">
@@ -63,9 +83,15 @@ const LoginPage = () => {
             Login
           </button>
         </form>
-        
+
+       
         {message && (
           <p className={`text-center mt-4 font-medium ${messageColor}`}>{message}</p>
+        )}
+
+        
+        {error && (
+          <p className="text-center mt-4 font-medium text-red-500">{error}</p>
         )}
       </div>
     </div>
