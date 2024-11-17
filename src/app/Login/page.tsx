@@ -14,7 +14,6 @@ const LoginPage = () => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Reset previous error message
     setError(null);
 
     const response = await fetch('/api/login', {
@@ -36,7 +35,6 @@ const LoginPage = () => {
       setMessageColor('text-red-500');
     }
 
-    // Handle fetch error
     if (!response.ok) {
       setError('An error occurred. Please try again later.');
     }
