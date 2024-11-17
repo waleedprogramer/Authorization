@@ -43,7 +43,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-600">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">Welcome back Fellas</h1>
+        <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">Welcome back!</h1>
         <p className="text-center mb-8 text-xl text-gray-600">Enter user & password to continue</p>
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
