@@ -8,7 +8,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [messageColor, setMessageColor] = useState('text-red-500');
-  const [error, setError] = useState<string | null>(null); // Track error message
+  const [error, setError] = useState<string | null>(null); 
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
